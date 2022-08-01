@@ -9,23 +9,25 @@
 /* Begin PBXBuildFile section */
 		5205D94F2898399E0047DA01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205D94E2898399E0047DA01 /* AppDelegate.swift */; };
 		5205D9512898399E0047DA01 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205D9502898399E0047DA01 /* SceneDelegate.swift */; };
-		5205D9532898399E0047DA01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205D9522898399E0047DA01 /* ViewController.swift */; };
 		5205D9562898399E0047DA01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5205D9542898399E0047DA01 /* Main.storyboard */; };
 		5205D9592898399E0047DA01 /* VK_GB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5205D9572898399E0047DA01 /* VK_GB.xcdatamodeld */; };
 		5205D95B289839A00047DA01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5205D95A289839A00047DA01 /* Assets.xcassets */; };
 		5205D95E289839A00047DA01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5205D95C289839A00047DA01 /* LaunchScreen.storyboard */; };
+		5205D96C28983F5C0047DA01 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205D96B28983F5C0047DA01 /* LoginViewController.swift */; };
+		5205D96E289840130047DA01 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205D96D289840130047DA01 /* Session.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5205D94B2898399E0047DA01 /* VK_GB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_GB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5205D94E2898399E0047DA01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5205D9502898399E0047DA01 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5205D9522898399E0047DA01 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5205D9552898399E0047DA01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5205D9582898399E0047DA01 /* VK_GB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VK_GB.xcdatamodel; sourceTree = "<group>"; };
 		5205D95A289839A00047DA01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5205D95D289839A00047DA01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5205D95F289839A00047DA01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5205D96B28983F5C0047DA01 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5205D96D289840130047DA01 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +60,65 @@
 		5205D94D2898399E0047DA01 /* VK_GB */ = {
 			isa = PBXGroup;
 			children = (
-				5205D94E2898399E0047DA01 /* AppDelegate.swift */,
-				5205D9502898399E0047DA01 /* SceneDelegate.swift */,
-				5205D9522898399E0047DA01 /* ViewController.swift */,
-				5205D9542898399E0047DA01 /* Main.storyboard */,
-				5205D95A289839A00047DA01 /* Assets.xcassets */,
-				5205D95C289839A00047DA01 /* LaunchScreen.storyboard */,
-				5205D95F289839A00047DA01 /* Info.plist */,
+				5205D966289839C50047DA01 /* App */,
+				5205D96A289839E00047DA01 /* Controller */,
+				5205D965289839BD0047DA01 /* Model */,
+				5205D969289839D90047DA01 /* Res */,
+				5205D968289839D10047DA01 /* Service */,
+				5205D967289839CA0047DA01 /* View */,
 				5205D9572898399E0047DA01 /* VK_GB.xcdatamodeld */,
 			);
 			path = VK_GB;
+			sourceTree = "<group>";
+		};
+		5205D965289839BD0047DA01 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5205D966289839C50047DA01 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5205D94E2898399E0047DA01 /* AppDelegate.swift */,
+				5205D9502898399E0047DA01 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5205D967289839CA0047DA01 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5205D968289839D10047DA01 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5205D96D289840130047DA01 /* Session.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		5205D969289839D90047DA01 /* Res */ = {
+			isa = PBXGroup;
+			children = (
+				5205D9542898399E0047DA01 /* Main.storyboard */,
+				5205D95C289839A00047DA01 /* LaunchScreen.storyboard */,
+				5205D95A289839A00047DA01 /* Assets.xcassets */,
+				5205D95F289839A00047DA01 /* Info.plist */,
+			);
+			path = Res;
+			sourceTree = "<group>";
+		};
+		5205D96A289839E00047DA01 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5205D96B28983F5C0047DA01 /* LoginViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,7 +192,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5205D9532898399E0047DA01 /* ViewController.swift in Sources */,
+				5205D96E289840130047DA01 /* Session.swift in Sources */,
+				5205D96C28983F5C0047DA01 /* LoginViewController.swift in Sources */,
 				5205D94F2898399E0047DA01 /* AppDelegate.swift in Sources */,
 				5205D9512898399E0047DA01 /* SceneDelegate.swift in Sources */,
 				5205D9592898399E0047DA01 /* VK_GB.xcdatamodeld in Sources */,
@@ -293,7 +345,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DXM7XH5L6J;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VK_GB/Info.plist;
+				INFOPLIST_FILE = VK_GB/Res/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -321,7 +373,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DXM7XH5L6J;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VK_GB/Info.plist;
+				INFOPLIST_FILE = VK_GB/Res/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
