@@ -8,7 +8,7 @@
 import Foundation
 
 class Session {
-    static let session = Session()
+    static let shared = Session()
     
     var token: String?
     var userId: Int?
