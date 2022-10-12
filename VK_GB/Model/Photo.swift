@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 class Photo: Object, Codable {
-    @objc dynamic var id: Int = 0
-    @objc dynamic var ownerID: Int = 0
+    @Persisted var id: Int = 0
+    @Persisted var ownerID: Int = 0
     var sizes =  List<Size>()
     
     enum CodingKeys: String, CodingKey {
@@ -35,7 +35,7 @@ class Photo: Object, Codable {
 }
 
 class Size: Object, Codable {
-    @objc dynamic var type: String = ""
-    @objc dynamic var url: String = ""
+    @Persisted var type: String = ""
+    @Persisted var url: String = ""
 }
 

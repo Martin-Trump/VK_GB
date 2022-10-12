@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 class FriendCell: UITableViewCell {
-   // var imageService = ImageService()
-    
+    let networkService = NetworkService()
     var avatarImage = UIImageView()
     var nameField   = UILabel()
     
@@ -27,7 +26,7 @@ class FriendCell: UITableViewCell {
     }
     
     func set(friend: Friend) {
-        imageService.loadImage(fromURL: friend.avatar) { image, _ in
+        networkService.loadImage(url: friend.avatar) { image, error in
             self.avatarImage.image = image
         }
         nameField.text = friend.firstName + " " + friend.lastName
@@ -35,13 +34,13 @@ class FriendCell: UITableViewCell {
     
     func configureAvatar() {
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
-        avatarImage.layer.cornerRadius = 40
+        avatarImage.layer.cornerRadius = 20
         avatarImage.layer.masksToBounds = true
         NSLayoutConstraint.activate([
             avatarImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
             avatarImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            avatarImage.heightAnchor.constraint(equalToConstant: 80),
-            avatarImage.widthAnchor.constraint(equalToConstant: 80)
+            avatarImage.heightAnchor.constraint(equalToConstant: 40),
+            avatarImage.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -49,7 +48,7 @@ class FriendCell: UITableViewCell {
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.numberOfLines = 0
         nameField.adjustsFontSizeToFitWidth = false
-        nameField.font = UIFont(name: "Courier Bold Oblique", size: 15)
+        nameField.font = UIFont(name: "Andale Mono", size: 15)
         NSLayoutConstraint.activate([
             nameField.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             nameField.leftAnchor.constraint(equalTo: avatarImage.rightAnchor, constant: 30),

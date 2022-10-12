@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import Alamofire
 
 class NetworkService {
-    private let cliendId = "7997968"
-    private let apiVer = "5.131"
+    private let cliendId = "51446605"
+    private let apiVer: String = "5.131"
     
     private var urlConstructor = URLComponents()
     private let configuration: URLSessionConfiguration!
@@ -17,6 +18,7 @@ class NetworkService {
     
     init() {
         urlConstructor.scheme = "https"
+        urlConstructor.host = "api.vk.com"
         configuration = URLSessionConfiguration.default
         session = URLSession(configuration: configuration)
         
@@ -39,95 +41,67 @@ class NetworkService {
             return request
     }
     
-    func loadImage (for ownerID: Int?, onComplete: @escaping([Photo]) -> Void, onError: @escaping(Error) -> Void) {
-        urlConstructor.host = "api.vk.com"
-        urlConstructor.path = "/method/photos.getAll"
-        
-        guard let owner = ownerID else {return }
-        
-        urlConstructor.queryItems = [
-            URLQueryItem(name: "ownerID", value: String(owner)),
-            URLQueryItem(name: "photo_sizes", value: "1"),
-            URLQueryItem(name: "extended", value: "1"),
-            URLQueryItem(name: "count", value: "20"),
-            URLQueryItem(name: "access_token", value: Session.shared.token),
-            URLQueryItem(name: "v", value: apiVer)
-        ]
-        
-        let task = session.dataTask(with: urlConstructor.url!) { (data, response, error) in
-            if  error != nil {
-                onError(ServerError.errorTask)
-            }
-            
-            guard let data = data else {
-                onError(ServerError.noDataProvided)
+
+    func loadImage(url: String, onComplete: @escaping (_ image: UIImage?, _ error: Error?) -> Void ) {
+        AF.request(url, method: .get).responseData { dataResponse in
+            guard let imageData = dataResponse.data else {
+                print(dataResponse.error!.localizedDescription)
                 return
             }
-            
-            guard let photos = try? JSONDecoder().decode(Response<Photo>.self, from: data).response.items else {
-                onError(ServerError.failedToDecode)
+            let image = UIImage(data: imageData, scale: 1.0)
+            onComplete(image, nil)
+        }
+    }
+    
+    
+    func getCommunities(completion: @escaping (([Group])-> Void)) -> Void {
+        urlConstructor.path = "/method/groups.get"
+        let parameters: Parameters = [
+            "extended" : "1",
+            "fields" :"description",
+            "access_token" : Session.shared.token!,
+            "v" : apiVer
+        ]
+        AF.request(urlConstructor.url!, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.data else {
+                print(response.error!.localizedDescription)
+                return
+            }
+            guard let communities = try! JSONDecoder().decode(Response<Group>?.self, from: data)?.response.items else {
+                print("response.error?.localizedDescription")
                 return
             }
             DispatchQueue.main.async {
-                onComplete(photos)
+                completion(communities)
             }
         }
-        task.resume()
     }
-    
-    func getURLDataCommunites() -> URL? {
-        urlConstructor.host = "api.vk.com"
-        urlConstructor.path = "/method/groups.get"
 
-        urlConstructor.queryItems = [
-            URLQueryItem(name: "extended", value: "1"),
-            URLQueryItem(name: "fields", value: "description"),
-            URLQueryItem(name: "access_token", value: Session.shared.token),
-            URLQueryItem(name: "v", value: apiVer),
-        ]
-        return urlConstructor.url
-    }
-    
-    func getUrlDataFriend() -> URL? {
-        urlConstructor.host = "api.vk.com"
+    func getFriends(completion: @escaping ([Friend]) -> Void) -> Void {
         urlConstructor.path = "/method/friends.get"
-        
-        urlConstructor.queryItems = [
-            URLQueryItem(name: "order", value: "name"),
-            URLQueryItem(name: "fields", value: "sex,bdate,city,country,photo_100"),
-            URLQueryItem(name: "access_token", value: Session.shared.token),
-            URLQueryItem(name: "v", value: apiVer)
+        let parameters: Parameters = [
+            "order" : "hints",
+            "fields" :"sex, bdate, city, country, photo_100, photo_200_orig",
+            "access_token" : Session.shared.token!,
+            "v" : apiVer
         ]
-        return urlConstructor.url
+
+        AF.request(urlConstructor.url!, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.data else {
+                print(response.error!.localizedDescription)
+                return
+            }
+            guard let friends = try! JSONDecoder().decode(Response<Friend>?.self, from: data)?.response.items else {
+                print("fuck")
+                return
+            }
+            DispatchQueue.main.async {
+                completion(friends)
+            }
+        }
     }
     
-    func getCommunity(onComplete: @escaping ([Group]) -> Void, onError: @escaping (Error) -> Void) {
-        urlConstructor.host = "api.vk.com"
-        urlConstructor.path = "/method/groups.get"
-
-        urlConstructor.queryItems = [
-            URLQueryItem(name: "extended", value: "1"),
-            URLQueryItem(name: "fields", value: "description"),
-            URLQueryItem(name: "access_token", value: Session.shared.token),
-            URLQueryItem(name: "v", value: apiVer),
-        ]
-       
-        let task = session.dataTask(with: urlConstructor.url!) { (data, response, error) in
-
-            if error != nil {
-                onError(ServerError.errorTask)
-            }
-
-            guard let data = data else {
-                onError(ServerError.noDataProvided)
-                return
-            }
-            guard let communities = try? JSONDecoder().decode(Response<Group>.self, from: data).response.items else {
-                onError(ServerError.failedToDecode)
-                return
-            }
-            onComplete(communities)
-        }
-        task.resume()
-    }
 }
+
+
+

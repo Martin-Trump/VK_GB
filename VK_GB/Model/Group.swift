@@ -8,7 +8,10 @@
 import Foundation
 import RealmSwift
 
-class Community: Object, Codable {
+class Groups: Object {
+    @Persisted var groups: List<Group>
+}
+class Group: Object, Codable {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var avatar: String = ""

@@ -8,6 +8,9 @@
 import Foundation
 import RealmSwift
 
+class Friends: Object {
+    @Persisted var friends: List<Object>
+}
 class Friend: Object, Codable {
     @objc dynamic var id: Int = 0
     @objc dynamic var firstName: String = ""

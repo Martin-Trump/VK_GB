@@ -21,6 +21,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(vkWebView)
+        vkWebView.navigationDelegate = self
+        
+        if let request = NetworkService().authorize() {
+            vkWebView.load(request)
+        }
     }
 }
 
