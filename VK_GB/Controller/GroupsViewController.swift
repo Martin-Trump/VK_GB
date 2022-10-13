@@ -11,7 +11,8 @@ import RealmSwift
 
 class GroupsViewController: UITableViewController {
     let networkService = NetworkService()
-    var groups = [Group]()
+    var groupsArray = [Group]()
+    let realm = try! Realm()
     init() {
         super.init(style: .plain)
         self.title = "Группы"
@@ -26,23 +27,39 @@ class GroupsViewController: UITableViewController {
         tableView.delegate = self
         tableView.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
         loadGroups()
+        
     }
     func loadGroups() {
-        networkService.getCommunities {  (communities) in
-            self.groups = communities
+        let groups = Groups()
+        let allGroups = realm.objects(Groups.self)
+        if let groupsRealm = allGroups.first(where: { groups in
+            !groups.groups.isEmpty
+        }) {
+            self.groupsArray = Array(groupsRealm.groups)
             self.tableView.reloadData()
+        } else {
+            networkService.getCommunities { [self] community in
+                 try! realm.write{
+                     realm.add(groups)
+                    allGroups.first?.groups.append(objectsIn: community)
+                }
+                self.groupsArray = Array(allGroups.first!.groups)
+                self.tableView.reloadData()
             }
         }
+        
+}
+
            
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell") as? GroupCell else {
             return UITableViewCell()
         }
-        cell.set(group: groups[indexPath.row])
+        cell.set(group: groupsArray[indexPath.row])
         return cell
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return groupsArray.count
     }
     
 }

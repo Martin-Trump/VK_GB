@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class Friends: Object {
-    @Persisted var friends: List<Object>
+    @Persisted var friends: List<Friend>
 }
 class Friend: Object, Codable {
     @objc dynamic var id: Int = 0

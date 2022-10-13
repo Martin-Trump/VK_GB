@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class Response<T: Codable>: Codable {
     let response: Items<T>

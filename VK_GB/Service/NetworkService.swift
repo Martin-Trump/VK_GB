@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import RealmSwift
 
 class NetworkService {
     private let cliendId = "51446605"
