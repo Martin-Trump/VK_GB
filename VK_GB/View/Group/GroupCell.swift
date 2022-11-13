@@ -27,7 +27,7 @@ class GroupCell: UITableViewCell {
     }
     
     func set(group: Group) {
-        networkService.loadImage(url: group.avatar) { image, error in
+        networkService.loadImage(url: group.photo) { image, error in
             self.avatarImage.image = image
         }
         nameField.text = group.name

@@ -26,7 +26,7 @@ class FriendCell: UITableViewCell {
     }
     
     func set(friend: Friend) {
-        networkService.loadImage(url: friend.avatar) { image, error in
+        networkService.loadImage(url: friend.photo) { image, error in
             self.avatarImage.image = image
         }
         nameField.text = friend.firstName + " " + friend.lastName

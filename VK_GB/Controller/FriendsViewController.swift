@@ -18,7 +18,7 @@ class FriendsViewController: UITableViewController {
         super.init(style: .plain)
         self.title = "Друзья"
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -30,16 +30,16 @@ class FriendsViewController: UITableViewController {
         //loadFriends()
         realmObserve()
     }
-    
+
     func realmObserve() {
         let friends = Friends()
         let allFriends = realm.objects(Friends.self)
         friendsArray = realm.objects(Friend.self)
         if allFriends.first?.friends == nil {
-            networkService.getFriends { [self] friends in
+            networkService.getFriends { [self] users in
                 try! realm.write {
                     realm.add(friends)
-                    allFriends.first?.friends.append(objectsIn: friends)
+                    allFriends.first?.friends.append(objectsIn: users)
                     
                 }
             }
@@ -71,26 +71,7 @@ class FriendsViewController: UITableViewController {
             }
         }
    
-//    func loadFriends() {
-//        let friends = Friends()
-//        let allFriends = realm.objects(Friends.self)
-//        if let friendsRealm = allFriends.first(where: { friends in
-//            !friends.friends.isEmpty
-//        }) {
-//            self.friendsArray = Array(friendsRealm.friends)
-//            self.tableView.reloadData()
-//        } else {
-//            networkService.getFriends { [self] friend in
-//                 try! realm.write{
-//                     realm.add(friends)
-//                    allFriends.first?.friends.append(objectsIn: friend)
-//                }
-//                self.friendsArray = Array(allFriends.first!.friends)
-//                self.tableView.reloadData()
-//            }
-//        }
-//
-//}
+
            
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell") as? FriendCell else {

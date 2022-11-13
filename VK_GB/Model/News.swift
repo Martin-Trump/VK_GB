@@ -7,43 +7,60 @@
 
 import Foundation
 
-//struct NewsModel: Codable {
-//    let postID: Int
-//    let text: String
-//    let date: Double
-//    let attachments: [Attachment]?
-//    let likes: Like
-//    let comments: Comment
-//    let sourceID: Int
-//    var avatarURL: String?
-//    var creatorName: String?
-//    var photosURL: [String]? {
-//        get {
-//            let photosURL = attachments?.compactMap{ $0.photo?.sizes?.last?.url }
-//            return photosURL
-//        }
-//    }
-//    enum CodingKeys: String, CodingKey {
-//        case postID = "post_id"
-//        case text
-//        case date
-//        case likes
-//        case comments
-//        case attachments
-//        case sourceID = "source_id"
-//        case avatarURL
-//        case creatorName
-//    }
-//    
-//    
+enum Newsfeed {
+
+    enum Model {
+        struct Request {
+            enum RequestType {
+                case getNewsfeed
+                //case getUser
+                case revealPostIds(postId: Int)
+                case getNextBatch
+            }
+        }
+        struct Response {
+            enum ResponseType {
+                case presentNewsfeed(feed: FeedResponse, revealdedPostIds: [Int])
+                //case presentUserInfo(user: UserResponse?)
+                case presentFooterLoader
+            }
+        }
+        struct ViewModel {
+            enum ViewModelData {
+                case displayNewsfeed(feedViewModel: FeedViewModel)
+                //case displayUser(userViewModel: UserViewModel)
+                case displayFooterLoader
+            }
+        }
+    }
+}
+
+//struct UserViewModel: TitleViewViewModel {
+//    var photoUrlString: String?
+//    var name: String
 //}
-//struct Attachment: Codable {
-//    let type: String?
-//    let photo: Photo?
-//}
-//struct Like: Codable {
-//    let count: Int
-//}
-//struct Comment: Codable {
-//    let count: Int
-//}
+
+struct FeedViewModel {
+    struct Cell: FeedCellViewModel {
+        var postId: Int
+
+        var iconUrlString: String
+        var name: String
+        var date: String
+        var text: String?
+        var likes: String?
+        var comments: String?
+        var shares: String?
+        var views: String?
+        var photoAttachements: [FeedCellPhotoAttachementViewModel]
+        var sizes: FeedCellSizes
+    }
+
+    struct FeedCellPhotoAttachment: FeedCellPhotoAttachementViewModel {
+        var photoUrlString: String?
+        var width: Int
+        var height: Int
+    }
+    let cells: [Cell]
+    let footerTitle: String?
+}

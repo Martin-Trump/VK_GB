@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 
 class GroupsViewController: UITableViewController {
+    
     let networkService = NetworkService()
     var groupsArray: Results<Group>?
     let realm = try! Realm()

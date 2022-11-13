@@ -32,7 +32,7 @@ class MainMenuViewController: UITabBarController {
 
 
 
-func createNavController(vc: UITableViewController, textItem: String, imageItem: String) -> UINavigationController {
+func createNavController(vc: UIViewController, textItem: String, imageItem: String) -> UINavigationController {
     
     let item = UITabBarItem(title: textItem, image: UIImage(systemName: imageItem), tag: 0)
     let navController = UINavigationController(rootViewController: vc)

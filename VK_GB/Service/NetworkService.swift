@@ -31,7 +31,7 @@ class NetworkService {
         
         urlConstructor.queryItems = [
             URLQueryItem(name: "client_id", value: cliendId),
-            URLQueryItem(name: "scope", value: "friends,groups,photos,wall"),
+            URLQueryItem(name: "scope", value: "401502"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "response_type", value: "token"),
@@ -102,6 +102,31 @@ class NetworkService {
         }
     }
     
+    func getNewsFeed(nextBatchFrom: String?, completion: @escaping (FeedResponse?) -> Void) {
+        urlConstructor.path = "/method/newsfeed.get"
+        let parameters: Parameters = [
+            "filters" : "post,photo",
+            "start_from" : nextBatchFrom,
+            "access_token" : Session.shared.token!,
+            "v" : apiVer
+        ]
+
+        AF.request(urlConstructor.url!, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.data else {
+                print("oh shit")
+                return
+            }
+            var decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            guard let feed = try? decoder.decode(FeedResponseWrapped?.self, from: data)?.response else {
+                print("blyat")
+                return
+            }
+            DispatchQueue.main.async {
+                completion(feed)
+            }
+        }
+    }
 }
 
 
